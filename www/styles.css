@@ -1,46 +1,151 @@
+@font-face{
+  font-family: "oswald";
+  src: url("./oswalds.ttf");
+}
+
 html,
-body{
-  width:100%!important;
-  height: 100%!important;
-
+body {
+    width: 100%!important;
+    height: 100%!important;
 }
 
-.popup-p{
-  color:wheat!important;
+:root {
+    --mainFontColor: black;
+    --mainBackgroundColor: rgb(232,212,24);
 }
 
-.coordinates > div{
-  display: inline;
+* {
+    color: var(--mainFontColor);
+    font-family: "oswald";
+    font-size:24px;
+    font-weight: bolder;
+}
+
+.selectize-input {
+    background-color: var(--mainBackgroundColor)!important;
+}
+
+.popup-p {
+    color: wheat!important;
+}
+
+.coordinates>div {
+    display: inline;
 }
 
 .coordinates_main_container {
-  display: flex;
+    display: flex;
+    justify-content: space-between;
+}
+
+.coordinates_container {
+    width: 50%;
+    text-align: center;
+}
+
+.coordinates_container>div {}
+
+#lat {
+    text-align: center;
+    background-color: var(--mainBackgroundColor);
+
+    border-radius: 10px;
+    font-size: 23px;
+}
+
+#lng {
+    text-align: center;
+    background-color: var(--mainBackgroundColor);
+
+    border-radius: 10px;
+    font-size: 23px;
+}
+.leaflet-control-attribution.leaflet-control{
+  display:none;
+}
+.btn-custom{
+  background-color: var(--mainBackgroundColor)!important;
+}
+
+
+.d-flex{
+  display:flex;
+}
+
+.justify-content-center{
+  justfiy-content:center;
+}
+
+.justify-content-between{
   justify-content: space-between;
 }
 
-.coordinates_container{
-  width: 50%;
-  text-align: center;
+.align-items-center{
+  align-items: center;
 }
 
-.coordinates_container > div{
-
+.m-1{
+  margin:1px;
+}
+.m-2{
+  margin:2px;
+}
+.m-3{
+  margin:4px;
+}
+.m-4{
+  margin:8px;
+}
+.m-5{
+  margin:12px;
+}
+.p-1{
+  padding:1px;
+}
+.p-2{
+  padding:2px;
+}
+.p-3{
+  padding:4px;
+}
+.p-4{
+  padding:8px;
+}
+.p-5{
+  padding:12px;
 }
 
-#lat{
-  text-align: center;
-  background-color:gray;
-  margin:5px;
-  padding:10px;
-  border-radius:10px;
-  font-size: 23px;
+.w-25{
+  width:25%;
 }
 
-#lan{
-  text-align: center;
-  background-color:gray;
-  margin:5px;
-  padding:10px;
-  border-radius:10px;
-  font-size: 23px;
+.w-50{
+  width:50%;
+}
+
+.w-75{
+  width: 75%;
+}
+
+.w-100{
+  width:100%;
+}
+
+.h-25{
+  height:25%;
+}
+
+.h-50{
+  height:50%;
+}
+
+.h-75{
+  height: 75%;
+}
+
+.h-100{
+  height:100%;
+}
+.flex-column{
+  flex-direction: column;
 }
