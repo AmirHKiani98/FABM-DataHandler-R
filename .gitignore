@@ -1,2 +1,4 @@
-*.agdai
-MAlonzo/**
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata

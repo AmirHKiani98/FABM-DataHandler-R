@@ -1,0 +1,46 @@
+html,
+body{
+  width:100%!important;
+  height: 100%!important;
+
+}
+
+.popup-p{
+  color:wheat!important;
+}
+
+.coordinates > div{
+  display: inline;
+}
+
+.coordinates_main_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.coordinates_container{
+  width: 50%;
+  text-align: center;
+}
+
+.coordinates_container > div{
+
+}
+
+#lat{
+  text-align: center;
+  background-color:gray;
+  margin:5px;
+  padding:10px;
+  border-radius:10px;
+  font-size: 23px;
+}
+
+#lan{
+  text-align: center;
+  background-color:gray;
+  margin:5px;
+  padding:10px;
+  border-radius:10px;
+  font-size: 23px;
+}
