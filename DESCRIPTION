@@ -7,6 +7,16 @@ Maintainer: The package maintainer <yourself@somewhere.net>
 Description: This R packages is a part of FBAM which is abbreviated for Freight Agent-Based Models and handles and generate data file for the map
 License: MIT
 Encoding: UTF-8
-Imports:stringr
+Imports: 
+    bslib,
+    leaflet,
+    shiny,
+    shinythemes,
+    showtext,
+    stringr,
+    thematic
 LazyData: true
 RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

@@ -1,11 +1,5 @@
-#library("shiny")
-# library("leaflet")
-# library("bslib")
-# library("showtext")
-# library("thematic")
-# library("shinythemes")
-
-openMap <- function(data){
+openMap <-
+function(data){
   i <- 1;
   my_theme <- bs_theme(
     bootswatch = "darkly",
@@ -102,4 +96,3 @@ openMap <- function(data){
   }
   shinyApp(ui, server)
 }
-openMap(null)
