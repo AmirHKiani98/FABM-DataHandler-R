@@ -4,6 +4,8 @@
 # library("showtext")
 # library("thematic")
 # library("shinythemes")
+#' Openning the map for graphically accesses
+#' @param data The data which contains line of information
 
 openMap <- function(data){
   i <- 1;
@@ -87,10 +89,10 @@ openMap <- function(data){
       })
       # Lang and Lat
       output$lat <- renderText({
-        return(click$lat)
+        return(round(click$lat,2))
       })
       output$lng <- renderText({
-        return(click$lng)
+        return(round(click$lng,2))
       })
     })
     output$lng <- renderText({

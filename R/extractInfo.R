@@ -65,7 +65,6 @@ extractInfoByIndex <- function(data, agentType, agentName){
     }
   }
   return(FALSE)
-
 }
 
 
