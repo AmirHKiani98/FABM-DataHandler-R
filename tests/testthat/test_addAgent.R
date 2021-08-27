@@ -1,5 +1,4 @@
 context("Test Data Handling")
-library("FABDataHandler")
 
 test_that("Add data to test data", {
   data <- c();

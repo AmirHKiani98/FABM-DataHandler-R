@@ -1,6 +1,5 @@
 # FABM-DataHandler-R
-Freight Agent-Based Model - Handling Data - R
-This package made for adding and removing data (and also with graphically interfaces) to  handle data which is using for [this package which visualizes Freight Agent-Based models](https://github.com/AmirHKiani98/ABMFreight-Visualizer).
+This package made for adding and removing data (and also with graphically interfaces) which is used for [this package which visualizes Freight Agent-Based models](https://github.com/AmirHKiani98/ABMFreight-Visualizer).
 
 You are able to handle the data either directly in comman-line(scripts) or in [Map](#handle-data-in-map) which we provided for this purpose.
 
@@ -23,4 +22,19 @@ this function provides a map(which actually is a leaflet map) to handle the data
 To see the map enter `openMap(data)`, the data changes by adding and modifying the details in opened map.
 
 The parameters required for this function are:
-* data
+* `data` The array which contains the lines of information
+
+## How to install
+First, you need to install `devtools` package, (if you haven't done yet). You can do this with running:
+```r
+install.packages("devtools")
+```
+Then, you should load the library to have access to its functions
+```r
+library(devtools)
+```
+Finally, you can install any R package which served on the Github. For example, you can now install FABMDataHandler package with this line of code:
+```r
+install_github("AmirHKiani98/FABM-DataHandler-R")
+```
+Hooray!
