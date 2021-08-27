@@ -4,10 +4,10 @@ test_that("Check Map Markers", {
   data <- c()
   addAgent(
     agentName = "driver_2",
-    agentColor = "black",
+    agentColor = "blue",
     agentType = "driver",
     agentShapeType = "circle",
-    startCoordinate = "36.68 51.38",
+    startCoordinate = "34.68 51.38",
     path = "Not",
     data = data
   )
