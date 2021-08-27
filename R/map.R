@@ -19,6 +19,20 @@ openMap <- function(data) {
         c("Circle" = "crc",
           "Square" = "sqr")
       ),
+      selectInput(
+        "agent_color",
+        "Agent Color",
+        c(
+          "Blue" = "blue",
+          "Gold" = "sqr",
+          "Red" = "red",
+          "Green" = "green",
+          "Orange" = "orange",
+          "Yellow" = "yellow",
+          "Violet" = "violet",
+          "Black" = "black"
+        )
+      ),
       textInput("agent_name", "Agent Name"),
       shiny::tags$div(
         class = "coordinates_main_container",
@@ -55,8 +69,19 @@ openMap <- function(data) {
     iconAnchorY = 0,
   )
 
+  agent_color <- makeIcon(
+    iconUrl = system.file("extdata/markers", "blue.png", package = "FABDataHandler"),
+    shadowUrl = system.file("extdata", "shaddow.png", package = "FABDataHandler"),
+    iconHeight = 41,
+    iconWidth = 25,
+    iconAnchorX = 12,
+    iconAnchorY = 41,
+    popupAnchorX = 1,
+    popupAnchorY = -34,
+    shadowWidth = 41,
+    shadowHeight = 41
+  )
   server <- function(input, output, session) {
-
     output$leaflet_map <- renderLeaflet({
       map <- leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
         addProviderTiles(providers$OpenStreetMap,
@@ -64,25 +89,52 @@ openMap <- function(data) {
         setView(53, 32, zoom = 5) %>%
         clearControls()
 
-      for(line in data){
+      for (line in data) {
+        info <- extractInfo(line)
+        color <- info$agentColor
+        markerIcon <- makeIcon(
+          iconUrl = system.file("extdata/markers", sprintf("%s.png", color), package = "FABDataHandler"),
+          shadowUrl = system.file("extdata", "shaddow.png", package = "FABDataHandler"),
+          iconHeight = 41,
+          iconWidth = 25,
+          iconAnchorX = 12,
+          iconAnchorY = 41,
+          popupAnchorX = 1,
+          popupAnchorY = -34,
+          shadowWidth = 41,
+          shadowHeight = 41
+        )
+        print(info)
         coordinates <- extractCoordinatesByLine(line)
         newLat <- as.double(coordinates$lat)
         newLng <- as.double(coordinates$lng)
         print(newLat)
-        leafletProxy("leaflet_map") %>% addMarkers(
-          lng = newLng,
-          lat = newLat,
-          layerId = as.character(i),
-          # popup = sprintf(
-          #   "<p class='popup-p'>I wanna know you more</p><a class='delete-markdown' data-target-id='%s'>Delete Me<a>",
-          #   as.character(i)
-          # )
-        )
-        i <<- i+1
+        leafletProxy("leaflet_map") %>% addMarkers(lng = newLng,
+                                                   lat = newLat,
+                                                   icon = markerIcon,
+                                                   layerId = as.character(i),)
+        i <<- i + 1
       }
       return(map)
 
     })
+    # Observe marker color
+    observeEvent(input$agent_color, {
+      agent_color <<- makeIcon(
+        iconUrl = system.file("extdata/markers", sprintf("%s.png", input$agent_color), package = "FABDataHandler"),
+        shadowUrl = system.file("extdata", "shaddow.png", package = "FABDataHandler"),
+        iconHeight = 41,
+        iconWidth = 25,
+        iconAnchorX = 12,
+        iconAnchorY = 41,
+        popupAnchorX = 1,
+        popupAnchorY = -34,
+        shadowWidth = 41,
+        shadowHeight = 41
+      )
+    })
+
+    # Observe map
     observeEvent(input$leaflet_map_click, {
       click <- input$leaflet_map_click # typo was on this line
       if (is.null(click)) {
@@ -93,15 +145,14 @@ openMap <- function(data) {
           addMarkers(
             lng = click$lng,
             lat = click$lat,
-            icon = circle_icon,
-            layerId = as.character(i),
+            icon = agent_color,
+            layerId = "to_add",
             # popup = sprintf(
             #   "<p class='popup-p'>I wanna know you more</p><a class='delete-markdown' data-target-id='%s'>Delete Me<a>",
             #   as.character(i)
-            # )
           )
         leafletProxy("leaflet_map")
-        i <<- i + 1
+        # i <<- i + 1
       }
       output$check <- renderText({
         return(input$time1)
@@ -115,9 +166,9 @@ openMap <- function(data) {
       })
     })
     observeEvent(input$leaflet_map_marker_click, {
-      if(is.null(input$leaflet_map_marker_click)){
+      if (is.null(input$leaflet_map_marker_click)) {
         return()
-      }else{
+      } else{
         leafletProxy("leaflet_map") %>% removeMarker(input$leaflet_map_marker_click$id)
       }
     })
