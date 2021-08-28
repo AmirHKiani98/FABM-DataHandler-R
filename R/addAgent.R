@@ -16,7 +16,7 @@ addAgent <-
            agentShapeType,
            agentType,
            startCoordinate ,
-           path,
+           endCoorinate,
            agentColor,
            data) {
     if (missing(agentShapeType)) {
@@ -31,7 +31,7 @@ addAgent <-
           agentType,
           agentName,
           startCoordinate,
-          path,
+          endCoorinate,
           agentShapeType,
           agentColor,
           sep = "|"
@@ -48,7 +48,7 @@ addAgent <-
               agentType,
               agentName,
               startCoordinate,
-              path,
+              endCoorinate,
               agentShapeType,
               agentColor,
               sep = "|"
