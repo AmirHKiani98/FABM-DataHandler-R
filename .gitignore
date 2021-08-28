@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+inst/extdata/nodeJsFiles/node_modules
+inst/extdata/nodeJsFiles/data

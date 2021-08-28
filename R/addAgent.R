@@ -3,7 +3,7 @@
 #' @param agentShapeType The type of agent's shape, could be circle, square, etc.
 #' @param agentType Type of agent, in order to classifying
 #' @param startCoordinate The coordinates of start-point
-#' @param path The path of the start and end point
+#' @param endCoorinate The end of the agent's path
 #' @param agentColor The color which agent will be shown by in the map
 #' @param data The data that contains the lines of files
 #' @return The new data

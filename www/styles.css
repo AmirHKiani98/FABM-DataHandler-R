@@ -1,6 +1,6 @@
 @font-face{
   font-family: "oswald";
-  src: url("./oswalds.ttf");
+  src: url("./www/oswalds.ttf");
 }
 
 html,
@@ -60,11 +60,17 @@ body {
     border-radius: 10px;
     font-size: 23px;
 }
+
 .leaflet-control-attribution.leaflet-control{
   display:none;
 }
 .btn-custom{
   background-color: var(--mainBackgroundColor)!important;
+}
+
+
+.pretty.p-bigger.p-round.p-jelly.p-icon{
+
 }
 
 
