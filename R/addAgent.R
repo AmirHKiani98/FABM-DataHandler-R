@@ -3,7 +3,7 @@
 #' @param agentShapeType The type of agent's shape, could be circle, square, etc.
 #' @param agentType Type of agent, in order to classifying
 #' @param startCoordinate The coordinates of start-point
-#' @param endCoorinate The end of the agent's path
+#' @param endCoordinate The end of the agent's path
 #' @param agentColor The color which agent will be shown by in the map
 #' @param data The data that contains the lines of files
 #' @return The new data
@@ -16,7 +16,7 @@ addAgent <-
            agentShapeType,
            agentType,
            startCoordinate ,
-           endCoorinate,
+           endCoordinate,
            agentColor,
            data) {
     if (missing(agentShapeType)) {
@@ -31,7 +31,7 @@ addAgent <-
           agentType,
           agentName,
           startCoordinate,
-          endCoorinate,
+          endCoordinate,
           agentShapeType,
           agentColor,
           sep = "|"
@@ -48,7 +48,7 @@ addAgent <-
               agentType,
               agentName,
               startCoordinate,
-              endCoorinate,
+              endCoordinate,
               agentShapeType,
               agentColor,
               sep = "|"
@@ -59,5 +59,4 @@ addAgent <-
         }
       }
     }
-
   }

@@ -11,7 +11,7 @@ extractInfo <- function(line){
   infoList$agentType <- splittedResult[1]
   infoList$agentName <- splittedResult[2]
   infoList$startCoordinate <- splittedResult[3]
-  infoList$endCoorinate <- splittedResult[4]
+  infoList$endCoordinate <- splittedResult[4]
   infoList$agentShapeType <- splittedResult[5]
   infoList$agentColor <- splittedResult[6]
   return(infoList)

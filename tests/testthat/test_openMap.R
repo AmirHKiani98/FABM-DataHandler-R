@@ -7,8 +7,8 @@ test_that("Check Map Markers", {
     agentColor = "blue",
     agentType = "driver",
     agentShapeType = "circle",
-    startCoordinate = "34.68 51.38",
-    path = "Not",
+    startCoordinate = "32.68 51.38",
+    endCoordinate = "36.68 50.38",
     data = data
   )
   filter(removeAgentByName("driver_2", data = data), !is.na(removeAgentByName("driver_2", data = data)))

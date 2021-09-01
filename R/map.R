@@ -2,12 +2,11 @@
 #' @param data The data which contains line of information
 openMap <- function(data) {
   i <- 1
+  temp_data_to_delete <- c()
 
   ###### UI ######
   ui <- bootstrapPage (
-    #theme = my_theme,
     includeCSS("www/styles.css"),
-    #includeCSS("www/bootstrap/bootstrap.min.css"),
     includeScript("www/main.js"),
     leafletOutput("leaflet_map", width = "100%", height = "100%"),
     absolutePanel(
@@ -59,7 +58,7 @@ openMap <- function(data) {
         class = "d-flex flex-column align-items-center",
         actionButton(inputId = "add_agent_button", "Add Agent", class = "btn btn-custom m-3 w-50"),
         actionButton(inputId = "go_to_marker_button", "Go to Marker", class = "btn btn-custom m-3 w-50"),
-        actionButton(inputId = "remove_selection", "Apply Changes", class = "btn btn-custom m-3 w-50")
+        actionButton(inputId = "apply_changes_button", "Apply Changes", class = "btn btn-custom m-3 w-50")
       ),
       textOutput("check")
     )
@@ -103,7 +102,6 @@ openMap <- function(data) {
                          options = providerTileOptions(noWrap = TRUE)) %>%
         setView(53, 32, zoom = 5) %>%
         clearControls()
-      map
       for (line in data) {
         info <- extractInfo(line)
         color <- info$agentColor
@@ -119,22 +117,24 @@ openMap <- function(data) {
           shadowWidth = 41,
           shadowHeight = 41
         )
-        icon <- awesomeIcons(
-          icon = 'ios-close',
-          iconColor = 'black',
-          library = 'ion',
-          markerColor = "blue"
-        )
 
-        coordinates <- extractCoordinatesByLine(line)
-        newLat <- as.double(coordinates$lat)
-        newLng <- as.double(coordinates$lng)
-        print(newLat)
+
+        startCoordinates <- extractStartCoordinatesByLine(line)
+        endCoordinates <- extractEndCoordinatesByLine(line)
+        startLat <- as.double(startCoordinates$lat)
+        startLng <- as.double(startCoordinates$lng)
+        endLat <- as.double(endCoordinates$lat)
+        endLng <- as.double(endCoordinates$lng)
         leafletProxy("leaflet_map") %>% addMarkers(
-          lng = newLng,
-          lat = newLat,
-          icon = icon,
-          layerId = as.character(i),
+          lng = startLng,
+          lat = startLat,
+          icon = markerIcon,
+          layerId = sprintf("start_point_%s", as.character(i)),
+        ) %>% addMarkers(
+          lng = endLng,
+          lat = endLat,
+          icon = markerIcon,
+          layerId = sprintf("end_point_%s", as.character(i)),
         )
         i <<- i + 1
       }
@@ -143,7 +143,7 @@ openMap <- function(data) {
     })
     # Observe marker color
     observeEvent(input$agent_color, {
-      agent_color <<- makeIcon(
+      agent_color_icon <<- makeIcon(
         iconUrl = system.file(
           "extdata/markers",
           sprintf("%s.png", input$agent_color),
@@ -175,19 +175,13 @@ openMap <- function(data) {
           startLocation <<- c(click$lat, click$lng)
         }
         leafletProxy("leaflet_map") %>%
-          #clearMarkers() %>%
           addMarkers(
             lng = click$lng,
             lat = click$lat,
             icon = agent_color_icon,
             layerId = marker_type,
-            # popup = sprintf(
-            #   "<p class='popup-p'>I wanna know you more</p><a class='delete-markdown' data-target-id='%s'>Delete Me<a>",
-            #   as.character(i)
           )
-
         leafletProxy("leaflet_map")
-        # i <<- i + 1
       }
       output$check <- renderText({
         return(input$time1)
@@ -200,12 +194,22 @@ openMap <- function(data) {
         return(round(click$lng, 2))
       })
     })
+
+    # Marker click observer
     observeEvent(input$leaflet_map_marker_click, {
       if (is.null(input$leaflet_map_marker_click)) {
         return()
       } else{
-        print(input$leaflet_map_marker_click$id)
-        #leafletProxy("leaflet_map") %>% removeMarker(input$leaflet_map_marker_click$id)
+        layerId <- input$leaflet_map_marker_click$id
+        splittedString <- stringr::str_split(layerId, '\\_')[[1]]
+        if (length(splittedString) == 3) {
+          id <- splittedString[3]
+          leafletProxy("leaflet_map") %>%
+            removeMarker(sprintf("start_point_%s", id)) %>%
+            removeMarker(sprintf("end_point_%s", id))
+
+          temp_data_to_delete <<- c(temp_data_to_delete, as.numeric(id))
+        }
       }
     })
     output$lng <- renderText({
@@ -238,43 +242,50 @@ openMap <- function(data) {
       if (is.null(startLocation) || is.null(endLocation)) {
         showModal(modalDialog("One of the 'Start' or 'End' points is not defined"))
       } else{
-        agent_shape <- input$agent_shape_select
-        agent_name <- input$agent_name
-        agent_type <- input$agent_type
-        agent_color_main <- input$agent_color
-        addAgent(
-          agentName = agent_name,
-          agentShapeType = agent_shape,
-          agentType = agent_type,
-          startCoordinate = startLocation,
-          endCoorinate = endLocation,
-          agentColor = agent_color_main
-        )
-        leafletProxy("leaflet_map") %>% removeMarker("to_add")
-        addMarkers(
-          lng = markerLocation[2],
-          lat = markerLocation[1],
-          icon = agent_color_icon,
-          layerId = sprintf("start_location_%s", as.character(length(data))),
-          # popup = sprintf(
-          #   "<p class='popup-p'>I wanna know you more</p><a class='delete-markdown' data-target-id='%s'>Delete Me<a>",
-          #   as.character(i)
-        )
-        addMarkers(
-          lng = markerLocation[2],
-          lat = markerLocation[1],
-          icon = agent_color_icon,
-          layerId = sprintf("end_location_%s", as.character(length(data))),
-          # popup = sprintf(
-          #   "<p class='popup-p'>I wanna know you more</p><a class='delete-markdown' data-target-id='%s'>Delete Me<a>",
-          #   as.character(i)
-        )
-        markerLocation <<- c()
-
+        if(input$agent_type == "" || input$agent_name == ""){
+          showModal(modalDialog("One of the 'Agent Type' or 'Agent Name' is not defined"))
+        }else{
+          agent_shape <- input$agent_shape_select
+          agent_name <- input$agent_name
+          agent_type <- input$agent_type
+          agent_color_main <- input$agent_color
+          startLocationString <- paste(startLocation[1], startLocation[2], sep = " ")
+          endLocationString <- paste(endLocation[1], endLocation[2], sep = " ")
+          data <<- addAgent(
+            agentName = agent_name,
+            agentShapeType = agent_shape,
+            agentType = agent_type,
+            startCoordinate = startLocationString,
+            endCoordinate = endLocationString,
+            agentColor = agent_color_main,
+            data = data
+          )
+          leafletProxy("leaflet_map") %>%
+            addMarkers(
+              lng = startLocation[2],
+              lat = startLocation[1],
+              icon = agent_color_icon,
+              layerId = sprintf("start_location_%s", as.character(length(data))),
+            ) %>%
+            addMarkers(
+              lng = endLocation[2],
+              lat = endLocation[1],
+              icon = agent_color_icon,
+              layerId = sprintf("end_location_%s", as.character(length(data))),
+            )
+          startLocation <<- NULL
+          endLocation <<- NULL
+        }
       }
-
     })
+    # Apply changes
+    observeEvent(input$apply_changes_button, {
+      data <<- removeAgentByArray(temp_data_to_delete, data)
+      temp_data_to_delete <<- c()
+    })
+
 
   }
   shinyApp(ui, server)
 }
+
