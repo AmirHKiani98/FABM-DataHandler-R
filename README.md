@@ -26,7 +26,7 @@ The parameters required for this function are:
 
 The GIF below provides a little bit information about how it works. At the time you are installing this package, it may have changed in graphical interfaces but the main idea should be still the same.
 
-![GIF file cannot be loaded](https://s18.picofile.com/file/8440166068/map.gif)
+![GIF file cannot be loaded](https://github.com/AmirHKiani98/FABM-DataHandler-R/blob/main/assets/map.gif?raw=true)
 
 ## How to install
 First, you need to install `devtools` package, (if you haven't done yet). You can do this with running:
