@@ -17,6 +17,33 @@ The parameters required for this function are:
 * `agentColor` The color which agent will be shown by in the map
 * `data` The data that contains the lines of files
 
+### Remove agent
+In this section, there are a few ways to remove an agent from the data list.
+#### Remove Agent by Name
+`removeAgentByName()` will remove an agent from `data` array by using the name of the agent.
+*`agentName` The name of the agent to be removed
+*`data` The data which contains line of the output
+
+#### Remove Agent by Start Coordinate
+`removeAgentByStartCoordinate()` will remove an agent by using the start point of the agent(s). The end point can be different in some decimal numbers. This means that using *53.23* will delete both *52.23* and *52.2342* but not *52.2*
+*`startCoordinate` The coordinate's of the location to start.
+*`data` The data which contains line of the output
+
+#### Remove Agent by End Coordinate
+`removeAgentByEndCoordinate()` will remove an agent by using the end point of the agent(s). The end point can be different in some decimal numbers. This means that using *53.23* will delete both *52.23* and *52.2342* but not *52.2*
+*`endCoordinate` The coordinate's of the location to start.
+*`data` The data which contains line of the output
+
+#### Remove Agent by Index of The Line
+`removeAgentByIndex()` will remove an agent by using the index of the line in data array.
+*`index` The index of the line to delete
+*`data` The data which contains line of the output
+
+#### Remove Agents by Array
+`removeAgentByArray()` will remove a series of agents by their index. e.g. if you pass c(1,2,3,4) as indicesArray to this function, this will delete lines with indices of 1, 2, 3 and 4.
+*`indicesArray` The index of the line to delete
+*`data` The data which contains line of the output
+
 ### Handle data in map
 this function provides a map(which actually is a leaflet map) to handle the data graphically.
 To see the map enter `openMap(data)`, the data changes by adding and modifying the details in opened map.
