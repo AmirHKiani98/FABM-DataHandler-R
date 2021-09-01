@@ -31,7 +31,7 @@ removeAgentByStartCoordinate <- function(startCoordinate, data){
 #' @param data The data which contains line of the output
 #' @return The data which has been adjusted
 
-removeAgentByStartCoordinate <- function(endCoordinate, data){
+removeAgentByEndCoordinate <- function(endCoordinate, data){
   for(i in 1:length(data)){
     line <- data[i]
     if(stringr::str_detect(line, pattern = endCoordinate)){
