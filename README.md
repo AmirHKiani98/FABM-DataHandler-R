@@ -1,5 +1,5 @@
 # FABM-DataHandler-R
-This package made to add and remove data (and also with graphically interfaces) which is used for [this package that visualizes freight agent-based models](https://github.com/AmirHKiani98/ABMFreight-Visualizer).
+This package is made to add and remove data (and also with graphically interfaces) which is used for [this package that visualizes freight agent-based models](https://github.com/AmirHKiani98/ABMFreight-Visualizer).
 
 You can handle the data either directly in command-line(scripts) or in [Map](#handle-data-in-map) which we provided for this purpose.
 
