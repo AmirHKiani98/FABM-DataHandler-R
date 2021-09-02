@@ -1,6 +1,6 @@
 #' Saving the data to a file
 #' @param path The destination path file
-#' @param data The list of lines
+#' @param data The array of lines
 #' @examples
 #' data <- readData(path)
 #' saveFile(newPath, data)
