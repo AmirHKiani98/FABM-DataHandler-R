@@ -6,4 +6,7 @@ $(document).on("shiny:connected", () => {
  //var marker = new L.marker([53, 31]);
   //marker.addTo(leaflet_map);
 
+
+
+
 })
