@@ -5,6 +5,10 @@ You can handle the data either directly in command-line(scripts) or in [Map](#ha
 
 By the end of this journey, you will have learnt how to make data file for the other sub-packages.
 
+<img src ="./readme files/map_gif.gif" alt="Loading Gif">
+<a href="https://colab.research.google.com/drive/1KBMvzO4X0vVCrM3Tz1WtCO5TeJs72mNg?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+
+
 ## Functions
 ### Add agent in command-line
 `addAgent()` function make you able to add new agent to the map.
